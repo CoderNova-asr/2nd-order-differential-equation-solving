@@ -15,18 +15,18 @@ import numpy as np            #in-built mathematical functions
 
 print("The general expression of a 2nd order differential eq.")
 print("\ny''=p(x)*y'+q(x)*y+F(x)")
-p=int(input('enter p(x)'))
-q=int(input('enter q(x)'))
+p=float(input('enter p(x)'))
+q=float(input('enter q(x)'))
 
 n=int(input('enter the no. of steps to be formed'))
 
 #boundary conditions
-a=int(input('enter a'))
-b=int(input('enter b'))
+a=float(input('enter a'))
+b=float(input('enter b'))
 h=(b-a)/n
 print('stepsize found',h)
-y1=int(input('Enter the value of y at a'))
-y2=int(input('Enter the value of y at b'))
+y1=float(input('Enter the value of y at a '))
+y2=float(input('Enter the value of y at b '))
 #coefficients of y
 A=-2*q*h**2-4         
 B=h*p+2
@@ -47,7 +47,9 @@ for i in range(n):
 for i in range(n+1):
    z=B
    X.append(z)
-    
+
+#print(X,Y,Z)  
+#print(np.diag(X,0),np.diag(Y,1),np.diag(Z,2)) 
 #making the tri diagonal matrix
 M=np.diag(X,0)+np.diag(Y,1)+np.diag(Z,2)
 print(M)
@@ -77,14 +79,20 @@ print('\n........\n')
 print(A,B,C)                    #matrices formed using the elements
 #finding values of y at the discrete values of x
 
-f=x*(x-4) #F(X) in the given eq
+f=x*(x-4)-(h*p+2)*y1 #F(X) in the given eq
 X=[x]
 D=[f]
-for i in range(n):
+
+for i in range(n-1):
     x=x+h
-    f=x*(x-4)
+    if i==n-3:
+        f=x*(x-4)-2*y2+h*p*y2
+        D.append(f)
+    else:
+        f=x*(x-4)
+        D.append(2*f*h**2)
     X.append(x)
-    D.append(2*f*h**2)
+    
 D=np.delete(D,(0,n))       #values not required to find the values of y
 
 print('\n........\n')
@@ -125,5 +133,8 @@ print(Y)
 print('\n........\n')
 
 print('solution using in-built function',W)
-plt.plot(X,Y,'r',label="sol. by thomas algorithm")
+plt.plot(X,Y,label="sol. by thomas algorithm")
 
+for i in range(5):
+    a=(n//4)*i
+    plt.plot(X[a],Y[a],'*')
