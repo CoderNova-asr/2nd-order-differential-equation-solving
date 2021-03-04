@@ -2,11 +2,7 @@
 """
 Created on Sun Feb  7 00:10:47 2021
 
-@author:Abhay Singh Rawat
-Topic: Shooting Method
-Roll No-19/17026
-B.Sc.(H)Physics-IV sem
-Section-A
+@author:CoderNova-asr
 
 """
 
